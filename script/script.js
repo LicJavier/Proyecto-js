@@ -56,7 +56,7 @@ class Personaje{
         }
     }
     defender(){
-        alert(Personaje1.nombre + " Utilizo Poción curativa y recupero 2 puntos de vida");
+        alert(Personaje1.nombre + " Utilizo Poción revitalizadora y ganó 2 puntos de vida");
         Personaje1.vida = Personaje1.vida+2;
         return Personaje1.vida;
     }
@@ -127,7 +127,7 @@ function combate(){
             Personaje1.atacar();
             npcJefe.vidaj = (npcJefe.vidaj) - (Personaje1.ataque);
             if(npcJefe.vidaj <= 0){
-                alert("Lotor a caído...");
+                alert( npcJefe.vidaj + " a caído...");
                 alert("¡Felicitaciones lo lograste!");
                 break;
             }
