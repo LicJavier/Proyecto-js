@@ -82,8 +82,8 @@ class NpcJefe{
     }
 }
 //Solicitud prompt para crear las caracteristicas del personaje
-let nombre = prompt("Ingrese un nombre");
-let eligeElemento = parseInt(prompt("Elegí un numero para tu elemento: 0: Normal, 1: Fuego, 2: Agua, 3: Viento, 4: Tierra, 5: Luz, 6: Oscuro.")) ;
+const nombre = prompt("Ingrese un nombre");
+const eligeElemento = parseInt(prompt("Elegí un numero para tu elemento: 0: Normal, 1: Fuego, 2: Agua, 3: Viento, 4: Tierra, 5: Luz, 6: Oscuro.")) ;
 
 //Array de elementos
 const Elementos = ["normal", "fuego", "agua", "viento", "tierra", "luz", "oscuro"];
@@ -127,7 +127,7 @@ function combate(){
             Personaje1.atacar();
             npcJefe.vidaj = (npcJefe.vidaj) - (Personaje1.ataque);
             if(npcJefe.vidaj <= 0){
-                alert( npcJefe.vidaj + " a caído...");
+                alert( npcJefe.nombrej + " a caído...");
                 alert("¡Felicitaciones lo lograste!");
                 break;
             }
