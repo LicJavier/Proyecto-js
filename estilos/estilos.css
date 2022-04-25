@@ -24,20 +24,21 @@ div.container header h1{
 div.container main{
     height: 40vmax;
     width: 100%;
-    display: flex;
-    justify-content: center;
-    align-content: center;
 }
 div.container main div.card{
-    height: 8vmax;
-    width: 50vmax;
+    height: 5vmax;
+    width: 100%;
     margin: auto;
     text-align: center;
+    display: flex;
+    flex-direction: column;
+    justify-content: flex-start;
+    align-content: flex-start;
 }
 div.container main div.card p{
     font-family: Verdana, Geneva, Tahoma, sans-serif;
     color: #111;
-    font-size: 3vmax;
+    font-size: 1.5vmax;
 }
 
 div.container footer{

@@ -83,6 +83,10 @@ class NpcJefe{
 }
 //Solicitud prompt para crear las caracteristicas del personaje
 const nombre = prompt("Ingrese un nombre");
+let titulo = document.createElement("h2");
+let div =document.getElementById("textoModificable");
+titulo.innerHTML= `Bienvenido ${nombre}`;
+div.append(titulo);
 const eligeElemento = parseInt(prompt("Elegí un numero para tu elemento: 0: Normal, 1: Fuego, 2: Agua, 3: Viento, 4: Tierra, 5: Luz, 6: Oscuro.")) ;
 
 //Array de elementos
@@ -120,7 +124,7 @@ function random2(min, max) {
 function combate(){
     alert("¡"+ (npcJefe.nombrej) + " ha aparecido!")
     while((npcJefe.vidaj) > 0 && (Personaje1.vida) > 0){
-        let accion = prompt("Ingresa 1 para atacar o 2 defender").toLocaleLowerCase();
+        let accion = prompt("Ingresa 1 para atacar o 2 defender");
         let atacar = 1;
         let defender = 2
         if(accion == atacar){
@@ -175,7 +179,7 @@ const pocionHp       = new Objeto(8, "poción revitalizadora", 5, 1);
 const soga           = new Objeto(9, "soga", 5, 1);
 const yesca          = new Objeto(10, "yesca", 5, 1);
 
-mochila.inventario =[bolsaDeMonedas, capa, jarro, manta, pedernal, soga, yesca];
+mochila.inventario =[capa, jarro, manta, pedernal, soga, yesca];
 class Moneda extends Objeto{
     constructor(id,nombre,valor,cantidad){
         super(id,nombre,valor,cantidad)
@@ -250,7 +254,7 @@ if (camino == 2) {
                 break;
             default:
                 alert("La mochila estaba demasiado cargada y se ha roto, has perdido tus objetos");
-                mochila= [];
+                mochila["inventario"]= [];
                 break;
         }    
     }else{
@@ -271,3 +275,17 @@ if (camino == 2) {
             break;
     } 
 }
+let resultado2 = [];
+let mochilaHtml = mochila.inventario.forEach(laMochila => {
+    resultado2= resultado2+=laMochila.nombre;
+    if (resultado2!="") {
+        resultado2+=" ";
+    }
+});
+let div2 =  document.createElement("p");
+div2.innerHTML =`Inventario: ${resultado2}`;
+div.append(div2);
+// let titulo = document.createElement("h2");
+// let div =document.getElementById("textoModificable");
+// titulo.innerHTML= `<h2>Bienvenido ${nombre} </h2>`;
+// div.append(titulo);
