@@ -141,6 +141,61 @@ function combate(){
         }
     }
 }
+//Creación de los objetos del juego
+class Objeto{
+
+    constructor(id, nombre, valor, cantidad ){
+        this.id = id;
+        this.nombre = nombre;
+        this.valor = valor;
+        this.cantidad = cantidad;
+    }
+}
+class Mochila extends Objeto{
+
+    constructor(id, nombre, valor, cantidad, capacidad, inventario){
+        super(id, nombre, valor, cantidad);
+        this.capacidad = capacidad;
+        this.inventario = inventario;
+    }
+    eliminarObjeto(){
+        
+    }
+}
+const mochila = new Mochila(1, "mochila", 20, 1, 7);;
+
+const baculo         = new Objeto(1, "báculo", 15, 1);
+const bolsaDeMonedas = new Objeto(2, "bolsa de monedas", 1, 1);
+const capa           = new Objeto(3, "capa", 25, 1);
+const espada         = new Objeto(4, "espada", 15, 1);
+const jarro          = new Objeto(5, "jarro", 5, 1);
+const manta          = new Objeto(6, "manta", 20, 1);
+const pedernal       = new Objeto(7, "pedernal", 5, 1);
+const pocionHp       = new Objeto(8, "poción revitalizadora", 5, 1);
+const soga           = new Objeto(9, "soga", 5, 1);
+const yesca          = new Objeto(10, "yesca", 5, 1);
+
+mochila.inventario =[bolsaDeMonedas, capa, jarro, manta, pedernal, soga, yesca];
+class Moneda extends Objeto{
+    constructor(id,nombre,valor,cantidad){
+        super(id,nombre,valor,cantidad)
+    }
+}
+const penique = new Moneda(1,"peñique de bronce", 1, 1);
+const chelin = new Moneda(2,"chelin de plata",((penique.valor)*12), 1);
+const corona = new Moneda(3, "corona de oro", ((chelin.valor)*20), 1);
+
+//Creación de la mochila
+//let mochila = [capa,yesca,pedernal,soga,bolsaDeMonedas,manta,jarro];
+switch (eligeElemento) {
+    case 0:
+        mochila.inventario.push(espada);
+        break;
+    default:
+        mochila.inventario.push(baculo);
+        break;
+}
+let mochiText = document.getElementById("textoModificable");
 //Comienza la aventura
 alert("Nos encontramos en la ruta al castillo de Bentania, se visibiliza una cueva, y a continuación del sendero un puente colgante")
 let camino = parseInt(prompt("Escoge tu Camino: 1 para entrar a la cueva, 2 para seguir por el sendero")) ;
@@ -156,6 +211,53 @@ switch (camino) {
         break;
 }
 if (camino == 2) {
+    alert("Has encontrado Pociones revitalizadoras en el piso, se han agregado a tú Mochila")
+    mochila.inventario.push(pocionHp);
+    pocionHp.cantidad = 5;
+    alert("Tu mochila esta llena! debes elegir un elemento para tirar")
+    const verMochila = confirm("¿Deseas ver dentro de la mochila?");
+    mochila['inventario'].sort(( a, b) => a - b);
+    if (verMochila == true){
+        const dentroMochila = mochila.inventario.forEach(laMochila => {
+            alert(laMochila.nombre);
+        });
+        let elegirDescarte = (prompt("Elegí un elemento a descartar"));
+        //capa,yesca,pedernal
+        switch (elegirDescarte) {
+            case "manta":
+                let descarte =mochila['inventario'].indexOf(manta);
+                mochila['inventario'].splice(descarte, 1);
+                break;
+            case "soga":
+                let descarte2 =mochila['inventario'].indexOf(soga);
+                mochila['inventario'].splice(descarte2, 1);
+                break;
+            case "jarro":
+                let descarte3 =mochila['inventario'].indexOf(jarro);
+                mochila['inventario'].splice(descarte3, 1);
+                break;
+            case "capa":
+                let descarte4 =mochila['inventario'].indexOf(capa);
+                mochila['inventario'].splice(descarte4, 1);
+                break;
+            case "yesca":
+                let descarte5 =mochila['inventario'].indexOf(yesca);
+                mochila['inventario'].splice(descarte5, 1);
+                break;
+            case "pedernal":
+                let descarte6 =mochila['inventario'].indexOf(pedernal);
+                mochila['inventario'].splice(descarte6, 1);
+                break;
+            default:
+                alert("La mochila estaba demasiado cargada y se ha roto, has perdido tus objetos");
+                mochila= [];
+                break;
+        }    
+    }else{
+        alert("La mochila estaba demasiado cargada y se ha roto, has perdido tus objetos");
+        mochila= [];
+    }
+    
     let decision = parseInt(prompt("Escoge 1 para cruzar el puente de todos modos o 2 para volver y entrar en la cueva"));
     switch (decision) {
         case 1:

@@ -2,6 +2,10 @@
     display: flex;
     flex-direction: column;
     width: 100%;
+    background-image: url(../imagenes/Castillo.jpg);
+    background-repeat: no-repeat;
+    background-size:cover;
+    background-position: 0%;
 }
 header{
     background-color: #2f2dc57e;
@@ -11,28 +15,39 @@ header{
     justify-content:space-around;
     height: 5vmax;
 }
-header h1{
+div.container header h1{
     text-align: center;
     font-family:Verdana, Geneva, Tahoma, sans-serif;
+    font-size: 3vmax;
 }
 
-main{
+div.container main{
     height: 40vmax;
     width: 100%;
+    display: flex;
+    justify-content: center;
+    align-content: center;
 }
-main div img.imagen__fondo{
-    width: 100%;
+div.container main div.card{
+    height: 8vmax;
+    width: 50vmax;
+    margin: auto;
+    text-align: center;
+}
+div.container main div.card p{
+    font-family: Verdana, Geneva, Tahoma, sans-serif;
+    color: #111;
+    font-size: 3vmax;
 }
 
-footer{
-    background-color:transparent;
+div.container footer{
     width: 100%;
-    position: fixed;
-    bottom: 0;
-    height: 6vmax;
+    height: 5vmax;
     font-family: Verdana, Geneva, Tahoma, sans-serif;
+    background-color:#3d3ada27;
 }
-footer h4{
+div.container footer h4{
     text-align: center;
     font-size: 2vmax;
+    margin: auto;
 }
