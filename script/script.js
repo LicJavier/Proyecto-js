@@ -1,7 +1,7 @@
 let resultado = 0;
-alert("Bienvenido a Bentania");
-alert("Crea un Personaje para tu próxima aventura");
-//Creación del personaje del Usuario.
+//--------------------------------------------------------------
+//------------Creación del personaje del Usuario----------------
+//--------------------------------------------------------------
 class Personaje{
 
     constructor(nombre,elemento,vida,ataque){
@@ -10,7 +10,9 @@ class Personaje{
         this.vida       =   vida;
         this.ataque     =   ataque;
     }
+    //--------------------------------------------------------------
     //Creación de ataques por cada elemento, elegido por el usuario.
+    //--------------------------------------------------------------
     atacar(){
         switch (Personaje1.elemento) {
             case "fuego":
@@ -61,13 +63,15 @@ class Personaje{
         return Personaje1.vida;
     }
 }
-//Creación de NPC Jefe para combatir
+//--------------------------------------------------------------
+//------------Creación de NPC Jefe para combatir----------------
+//--------------------------------------------------------------
 class NpcJefe{
 
     constructor(nombrej, elementoj, vidaj, ataquej){
         this.nombrej    = nombrej;
         this.elementoj  = elementoj;
-        this.vidaj       = vidaj;
+        this.vidaj      = vidaj;
         this.ataquej    = ataquej;
     }
     atacar(){
@@ -81,71 +85,9 @@ class NpcJefe{
         alert((npcJefe.nombrej) + " se escondio y recupero 1 punto de vida");
     }
 }
-//Solicitud prompt para crear las caracteristicas del personaje
-const nombre = prompt("Ingrese un nombre");
-let titulo = document.createElement("h2");
-let div =document.getElementById("textoModificable");
-titulo.innerHTML= `Bienvenido ${nombre}`;
-div.append(titulo);
-const eligeElemento = parseInt(prompt("Elegí un numero para tu elemento: 0: Normal, 1: Fuego, 2: Agua, 3: Viento, 4: Tierra, 5: Luz, 6: Oscuro.")) ;
-
-//Array de elementos
-const Elementos = ["normal", "fuego", "agua", "viento", "tierra", "luz", "oscuro"];
-let elemento = Elementos[eligeElemento];
-
-//Creación de los objetos(PERSONAJES)
-const npcJefe = new NpcJefe('Lotor el Jefe Oscuro', 'Oscuro', 5, 1);
-const Personaje1 = new Personaje(nombre, elemento, 5, 2);
-
-//funcion para ataque aleatorio del NPC
-function random(min, max) {
-    let resultado = Math.floor((Math.random() * (max - min + 1)) + min);
-    if(resultado == 1){
-        npcJefe.atacar();
-        Personaje1.vida = (Personaje1.vida) - (npcJefe.ataquej);
-    }else if(resultado == 2) {
-        npcJefe.defender();
-    }
-    return resultado
-}
-
-//funcion random para el puente
-function random2(min, max) {
-    let resultado = Math.floor((Math.random() * (max - min + 1)) + min);
-    if(resultado >30){
-        alert("El puente se derrumbó y caiste al Rio, lamenteblamente no sabias nadar y te ahogaste...");
-        Personaje1.vida = 0;
-    }else if(resultado <=30) {
-        alert("Mientras te diriges al otro extremo del puente, este comienza a derrumbarse. Pero con tus hábiles reflejos logras correr y cruzarlo con un salto. ¡Felicidades!")
-    }
-}
-
-//Función de combate utilizando While
-function combate(){
-    alert("¡"+ (npcJefe.nombrej) + " ha aparecido!")
-    while((npcJefe.vidaj) > 0 && (Personaje1.vida) > 0){
-        let accion = prompt("Ingresa 1 para atacar o 2 defender");
-        let atacar = 1;
-        let defender = 2
-        if(accion == atacar){
-            Personaje1.atacar();
-            npcJefe.vidaj = (npcJefe.vidaj) - (Personaje1.ataque);
-            if(npcJefe.vidaj <= 0){
-                alert( npcJefe.nombrej + " a caído...");
-                alert("¡Felicitaciones lo lograste!");
-                break;
-            }
-        }else if(accion == defender){
-            Personaje1.defender();
-        }
-        random(1,2)
-        if (Personaje1.vida <=0){
-            alert((Personaje1.nombre) + " Ha caído en combate guerrero");
-            break;
-        }
-    }
-}
-//Creación de los objetos del juego
+//--------------------------------------------------------------
+//----------Creación de los objetos del juego-------------------
+//--------------------------------------------------------------
 class Objeto{
 
     constructor(id, nombre, valor, cantidad ){
@@ -166,8 +108,14 @@ class Mochila extends Objeto{
         
     }
 }
+//---------------------------------------------------------------------------------
+//--------------------------Array de elementos-------------------------------------
+//--------------------------------------------------------------------------------
+const Elementos = ["normal", "fuego", "agua", "viento", "tierra", "luz", "oscuro"];
+//---------------------------------------------------------------------------------
+//--------------------------Creación de la mochila---------------------------------
+//---------------------------------------------------------------------------------
 const mochila = new Mochila(1, "mochila", 20, 1, 7);;
-
 const baculo         = new Objeto(1, "báculo", 15, 1);
 const bolsaDeMonedas = new Objeto(2, "bolsa de monedas", 1, 1);
 const capa           = new Objeto(3, "capa", 25, 1);
@@ -178,8 +126,14 @@ const pedernal       = new Objeto(7, "pedernal", 5, 1);
 const pocionHp       = new Objeto(8, "poción revitalizadora", 5, 1);
 const soga           = new Objeto(9, "soga", 5, 1);
 const yesca          = new Objeto(10, "yesca", 5, 1);
-
 mochila.inventario =[capa, jarro, manta, pedernal, soga, yesca];
+
+let divLaMochila = document.getElementById("laMochila");
+let btnMochila = document.getElementById("btnMochila");
+btnMochila.addEventListener('mouseup', abrirMochila);
+//----------------------------------------------------
+//Creacion de Objetos --Monedas--
+//---------------------------------------------------
 class Moneda extends Objeto{
     constructor(id,nombre,valor,cantidad){
         super(id,nombre,valor,cantidad)
@@ -188,39 +142,185 @@ class Moneda extends Objeto{
 const penique = new Moneda(1,"peñique de bronce", 1, 1);
 const chelin = new Moneda(2,"chelin de plata",((penique.valor)*12), 1);
 const corona = new Moneda(3, "corona de oro", ((chelin.valor)*20), 1);
+//---------------------------------------------------------------------------------
+//Declaracion de las variables para crear las caracteristicas del personaje
+//---------------------------------------------------------------------------------
+let nombre = "";
+let elemento = [];
+let Personaje1 = [];
+//---------------------------------------------------------------------------------
+//-------------------inputs para Creación del Persdonaje---------------------------
+//---------------------------------------------------------------------------------
+let inputText = document.getElementById("inputJugable");
+let inputBtn = document.getElementById("botonJugable");
+let textoModificable = document.getElementById("textoModificable");
+let inputElemento = document.getElementById("InputElemento");
+let seleccionElemento = document.createElement("option");
+let titulo = document.getElementById("titulo");
+seleccionElemento.innerText = "Seleccionar un elemento";
+seleccionElemento.value= "";
+inputElemento.append(seleccionElemento);
 
-//Creación de la mochila
-//let mochila = [capa,yesca,pedernal,soga,bolsaDeMonedas,manta,jarro];
-switch (eligeElemento) {
-    case 0:
-        mochila.inventario.push(espada);
-        break;
-    default:
-        mochila.inventario.push(baculo);
-        break;
+//--------------------------------------------
+//Agregamos los elementos a un select a través de un ForEach
+//--------------------------------------------
+Elementos.forEach( (elemento, iElemento) => {
+    let option = document.createElement("option");
+    option.innerText = elemento;
+    option.value = iElemento;
+    inputElemento.append(option)
+});
+//-----------------------------------------------
+//Obteniendo el arma y colocandola en la mochila
+//-------------------------------------------------
+function Arma() {
+    switch (inputElemento.value) {
+        case '0':
+            mochila.inventario.push(espada);
+            break;
+        default:
+            mochila.inventario.push(baculo);
+            break;
+    }
 }
-let mochiText = document.getElementById("textoModificable");
-//Comienza la aventura
-alert("Nos encontramos en la ruta al castillo de Bentania, se visibiliza una cueva, y a continuación del sendero un puente colgante")
-let camino = parseInt(prompt("Escoge tu Camino: 1 para entrar a la cueva, 2 para seguir por el sendero")) ;
-switch (camino) {
-    case 1:
-        combate();
-        break;
-    case 2:
-        alert("El puente se observa en mal estado");
-        break;
-    default:
-        alert("fuiste asesinado por la espalda");
-        break;
+//------------------------------------------------------------------
+//------------------Funcion de Primer CLICK-------------------------
+//------------------------------------------------------------------
+function primerClick() {
+    //Eleccion del Nombre
+    let nombreJ1 = inputText.value;
+    titulo.innerText = `Bienvenido ${nombreJ1}`;
+    nombre = nombreJ1;
+    //Eleccion del elemento
+    elemento = Elementos[inputElemento.value];
+    //Creacion del personaje jugador
+    Personaje1 = new Personaje(nombre, elemento, 5, 2);
+    //Obtener Arma
+    Arma();
+    //Comienza la aventura
+    Inicio();
+    inputBtn.removeEventListener('click', primerClick);
 }
-if (camino == 2) {
+inputBtn.addEventListener('click', primerClick);
+//------------------------------------------------------
+//--------------------Creación Del NPC------------------
+//------------------------------------------------------
+const npcJefe = new NpcJefe('Lotor el Jefe Oscuro', 'Oscuro', 5, 1);
+//---------------------------------------------------------------------------------
+//----------------------funcion para ataque aleatorio del NPC----------------------
+//---------------------------------------------------------------------------------
+function random(min, max) {
+    let resultado = Math.floor((Math.random() * (max - min + 1)) + min);
+    if(resultado == 1){
+        npcJefe.atacar();
+        Personaje1.vida = (Personaje1.vida) - (npcJefe.ataquej);
+    }else if(resultado == 2) {
+        npcJefe.defender();
+    }
+    return resultado
+}
+//---------------------------------------------------------------------------------
+//-----------------------funcion random para el puente-----------------------------
+//---------------------------------------------------------------------------------
+function random2(min, max) {
+    let resultado = Math.floor((Math.random() * (max - min + 1)) + min);
+    if(resultado >30){
+        textoModificable.innerText = "El puente se derrumbó y caiste al Rio, lamenteblamente no sabias nadar y te ahogaste...";
+        Personaje1.vida = 0;
+        inputBtn.removeEventListener('click', decidir);
+        volver.removeEventListener('click', combate);
+        inputBtn.value = "Continuara...";
+        volver.value = "Fin...";
+    }else if(resultado <=30) {
+        textoModificable.innerText = "Mientras te diriges al otro extremo del puente, este comienza a derrumbarse. Pero con tus hábiles reflejos logras correr y cruzarlo con un salto. ¡Felicidades!";
+        Personaje1.vida = 0;
+        inputBtn.removeEventListener('click', decidir);
+        volver.removeEventListener('click', combate);
+        inputBtn.value = "Continuara...";
+        volver.value = "Fin...";
+        }
+}
+//---------------------------------------------------------------------------------
+//------------------Función de combate utilizando While----------------------------
+//---------------------------------------------------------------------------------
+function combate(){
+    alert("¡"+ (npcJefe.nombrej) + " ha aparecido!")
+    while((npcJefe.vidaj) > 0 && (Personaje1.vida) > 0){
+        let accion = prompt("Ingresa 1 para atacar o 2 defender");
+        let atacar = 1;
+        let defender = 2
+        if(accion == atacar){
+            Personaje1.atacar();
+            npcJefe.vidaj = (npcJefe.vidaj) - (Personaje1.ataque);
+            if(npcJefe.vidaj <= 0){
+                textoModificable.innerText = `Lotor a caído...  ¡Felicitaciones lo lograste!`;
+                inputBtn.removeEventListener('click',combate);
+                volver.removeEventListener('click', combate);
+                inputBtn.removeEventListener('click', decidir)
+                inputBtn.value = "Continuara...";
+                volver.value = "Fin...";
+                break;
+            }
+        }else if(accion == defender){
+            Personaje1.defender();
+        }
+        random(1,2)
+        if (Personaje1.vida <=0){
+            textoModificable.innerText = `${nombre} Ha caído en combate guerrero`;
+            inputBtn.removeEventListener('click',combate);
+            break;
+        }
+    }
+    inputBtn.removeEventListener('click',combate);
+    inputBtn.removeEventListener('click', continuarCamino)
+    inputBtn.value = "Continuara...";
+    volver.value = "Fin...";
+}
+
+//--------------------------------------------
+//Declarando el div Padre para modificar
+//--------------------------------------------
+let divPadre = document.getElementById("divPadre");
+//------------------------------------------------------
+//-------------Declaración para volver------------------
+//------------------------------------------------------
+let volver = document.getElementById("botonJugable2");
+//------------------------------------------------------
+//--------------INICIO DE LA AVENTURA-------------------
+//------------------------------------------------------
+let camino = 0;
+
+function Inicio() {
+    inputElemento.style.display = "none";
+    inputText.style.display = "none";
+    textoModificable.innerText = "Nos encontramos en la ruta al castillo de Bentania, se visibiliza una cueva, y a continuación del sendero un puente colgante";
+    inputBtn.removeEventListener('click', primerClick);
+    inputBtn.addEventListener('click', primeraEleccion);
+}
+//----------------------------------------------------
+//------------------Primera Elección------------------
+//----------------------------------------------------
+function primeraEleccion() {
+    volver.style.display = "block";
+    textoModificable.innerText = "Escoge tu Camino: Volver para entrar a la cueva, Continuar para seguir por el sendero";
+    inputBtn.addEventListener('click', continuarCamino);
+    inputBtn.removeEventListener('click', Inicio);
+    volver.addEventListener('click', combate);
+    inputBtn.removeEventListener('click', primeraEleccion)
+}
+//---------------------------------------------------------------
+//--------------------Continuando el Camino----------------------
+//---------------------------------------------------------------
+let decision = 0;
+function continuarCamino() {
+    textoModificable.innerText = "El puente se observa en mal estado, presiona continuar para seguir o volver para regresar a la cueva";
+    inputBtn.removeEventListener('click', continuarCamino);
+    inputBtn.addEventListener('click', decidir);
     alert("Has encontrado Pociones revitalizadoras en el piso, se han agregado a tú Mochila")
     mochila.inventario.push(pocionHp);
     pocionHp.cantidad = 5;
     alert("Tu mochila esta llena! debes elegir un elemento para tirar")
     const verMochila = confirm("¿Deseas ver dentro de la mochila?");
-    mochila['inventario'].sort(( a, b) => a - b);
     if (verMochila == true){
         const dentroMochila = mochila.inventario.forEach(laMochila => {
             alert(laMochila.nombre);
@@ -261,31 +361,22 @@ if (camino == 2) {
         alert("La mochila estaba demasiado cargada y se ha roto, has perdido tus objetos");
         mochila= [];
     }
-    
-    let decision = parseInt(prompt("Escoge 1 para cruzar el puente de todos modos o 2 para volver y entrar en la cueva"));
-    switch (decision) {
-        case 1:
-            random2(0,100);
-            break;
-        case 2:
-            alert("regresas por el camino y entras a la cueva");
-            combate();
-            break;
-        default:
-            break;
-    } 
+    inputBtn.addEventListener('click', decidir);
 }
-let resultado2 = [];
-let mochilaHtml = mochila.inventario.forEach(laMochila => {
-    resultado2= resultado2+=laMochila.nombre;
-    if (resultado2!="") {
-        resultado2+=" ";
-    }
-});
-let div2 =  document.createElement("p");
-div2.innerHTML =`Inventario: ${resultado2}`;
-div.append(div2);
-// let titulo = document.createElement("h2");
-// let div =document.getElementById("textoModificable");
-// titulo.innerHTML= `<h2>Bienvenido ${nombre} </h2>`;
-// div.append(titulo);
+function decidir() {
+            random2(0,100);
+}
+//---------------------------------------------------------------------------------
+//----------------------FUNCION PARA ABRIR LA MOCHILA------------------------------
+//---------------------------------------------------------------------------------
+function abrirMochila() {
+        const dentroMochila = mochila.inventario.forEach(laMochila => {
+            let button = document.createElement("button");
+            button.innerText = laMochila.nombre;
+            button.value = laMochila.nombre;
+            divLaMochila.append(button)
+        });
+        btnMochila.style.display = "none";
+        alert("Mochila en progreso(Más funciones próximamente)")
+}
+

@@ -6,16 +6,24 @@
     <meta name="viewport" content="width=device-width, initial-scale=1.0">
     <title>Objetando Con Un Juego</title>
     <link rel="stylesheet" href="./estilos/estilos.css">
+    
 </head>
 <body>
     <div class="container">
         <header> 
-            <h1>Bienvenidos a Bentania</h1>
+            <h1 id="titulo">Bienvenidos a Bentania</h1>
         </header>
         <main>
-            <div class="card" id="textoModificable">
-                <p>Proyecto en Desarrollo</p>
+            <div id="laMochila">
+                <button id="btnMochila">Mochila</button>
             </div>
+            <div class="card" id="divPadre">
+                <p id="textoModificable">¡Crea un personaje para tu próxima aventura!</p>
+                <input type="text" name="" id="inputJugable">
+                <select type="text" name="" id="InputElemento"></select>
+                <input type="button" value="Volver" id="botonJugable2">
+            </div>
+            <input type="button" value="Continuar" id="botonJugable">
         </main>
         <footer>
             <h4>Powered by AleriQ</h4>
