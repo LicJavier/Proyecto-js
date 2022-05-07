@@ -1,3 +1,6 @@
+//------------------------------------------------------------------------------------------
+//--------------------------------------CODIGO DEL JUEGO------------------------------------
+//------------------------------------------------------------------------------------------
 let resultado = 0;
 //--------------------------------------------------------------
 //------------Creación del personaje del Usuario----------------
@@ -42,24 +45,24 @@ class Personaje{
                 break;
             case "luz":
                 alert(Personaje1.nombre + " utilizó el hechizo: ¡Luz resplandeciente!");
-                resultado = (npcJefe["vidaj"]) - ((Personaje1["ataque"]) + 1);
+                resultado = (npcJefe["vidaj"]) - ((Personaje1["ataque"]) += 1);
                 alert("A "+ npcJefe.nombrej  + " le queda " + resultado + " de vida") ;
                 break;
             case "oscuro":
                 alert(Personaje1.nombre + " lanzo ¡bola sombría!");
-                resultado = (npcJefe["vidaj"]) - ((Personaje1["ataque"]) - 1);
+                resultado = (npcJefe["vidaj"]) - ((Personaje1["ataque"]) -= 1);
                 alert("A "+ npcJefe.nombrej + " le queda " + resultado + " de vida") ;
                 break;        
             default:
                 alert(Personaje1.nombre + " ¡golpeó a " + (npcJefe.nombrej)+ "con un puñetazo!");
-                resultado = (npcJefe["vidaj"]) - ((Personaje1["ataque"]) - 1);
+                resultado = (npcJefe["vidaj"]) - ((Personaje1["ataque"]) -= 1);
                 alert("A "+ npcJefe.nombrej + " le queda "+ resultado + " de vida") ;
                 break;
         }
     }
     defender(){
         alert(Personaje1.nombre + " Utilizo Poción revitalizadora y ganó 2 puntos de vida");
-        Personaje1.vida = Personaje1.vida+2;
+        Personaje1.vida = (Personaje1.vida)+=2;
         return Personaje1.vida;
     }
 }
@@ -75,10 +78,15 @@ class NpcJefe{
         this.ataquej    = ataquej;
     }
     atacar(){
-        alert(npcJefe.nombrej + " lanzó ¡Bola sombría!");
+        if (npcJefe["vidaJ"]>0) {
+            alert(npcJefe.nombrej + " lanzó ¡Bola sombría!");
         let resultado = (Personaje1["vida"]) - (npcJefe["ataquej"]);
         alert("A " + (Personaje1.nombre) + " le queda "+ resultado + " de vida") ;
         return resultado;
+        } else if(npcJefe["vidaj"] <=0){
+            alert(`Me las pagarás ${Personaje1.nombre}...`)
+        }
+        
     }
     defender(){
         npcJefe["vidaj"] = npcJefe["vidaj"] + 1;
@@ -126,14 +134,47 @@ const pedernal       = new Objeto(7, "pedernal", 5, 1);
 const pocionHp       = new Objeto(8, "poción revitalizadora", 5, 1);
 const soga           = new Objeto(9, "soga", 5, 1);
 const yesca          = new Objeto(10, "yesca", 5, 1);
-mochila.inventario =[capa, jarro, manta, pedernal, soga, yesca];
 
+mochila.inventario =[capa, jarro, manta, pedernal, soga, yesca];
+localStorage.setItem('inventario', JSON.stringify(mochila.inventario));
 let divLaMochila = document.getElementById("laMochila");
 let btnMochila = document.getElementById("btnMochila");
-btnMochila.addEventListener('mouseup', abrirMochila);
-//----------------------------------------------------
-//Creacion de Objetos --Monedas--
-//---------------------------------------------------
+btnMochila.addEventListener('click', abrirMochila);
+
+//---------------------------------------------------------------------------------
+//----------------------FUNCION PARA ABRIR LA MOCHILA------------------------------
+//---------------------------------------------------------------------------------
+let mochilaJson = localStorage.getItem('inventario');
+let arrayMochila = JSON.parse(mochilaJson);
+function abrirMochila() {
+    mochilaJson = localStorage.getItem('inventario');
+    arrayMochila = JSON.parse(mochilaJson);
+    const inventarioNombres = arrayMochila.forEach( laMochila =>{
+        let button = document.createElement("button");
+        button.innerText = laMochila.nombre;
+        button.value = laMochila.nombre;
+        button.classList.add("mochila")
+        divLaMochila.append(button);
+    }
+    )
+    alert("Mochila en progreso(Más funciones próximamente)")
+    btnMochila.removeEventListener('click', abrirMochila);
+    btnMochila.addEventListener('click', cerrarMochila);
+}
+//---------------------------------------------------------------------------------
+//----------------------FUNCION PARA CERRAR LA MOCHILA------------------------------
+//---------------------------------------------------------------------------------
+function cerrarMochila() {
+    for (let i = 0; i < arrayMochila.length; i++) {
+        divLaMochila.removeChild(divLaMochila.lastChild)
+    }
+    btnMochila.removeEventListener('click', cerrarMochila);
+    btnMochila.addEventListener("click", abrirMochila);
+}
+
+//---------------------------------------------------------------------------------
+//--------------------------Creacion de Objetos --Monedas--------------------------
+//---------------------------------------------------------------------------------
 class Moneda extends Objeto{
     constructor(id,nombre,valor,cantidad){
         super(id,nombre,valor,cantidad)
@@ -182,6 +223,7 @@ function Arma() {
             mochila.inventario.push(baculo);
             break;
     }
+    localStorage.setItem('inventario', JSON.stringify(mochila.inventario));
 }
 //------------------------------------------------------------------
 //------------------Funcion de Primer CLICK-------------------------
@@ -331,52 +373,48 @@ function continuarCamino() {
             case "manta":
                 let descarte =mochila['inventario'].indexOf(manta);
                 mochila['inventario'].splice(descarte, 1);
+                localStorage.setItem('inventario', JSON.stringify(mochila.inventario));
                 break;
             case "soga":
                 let descarte2 =mochila['inventario'].indexOf(soga);
                 mochila['inventario'].splice(descarte2, 1);
+                localStorage.setItem('inventario', JSON.stringify(mochila.inventario));
                 break;
             case "jarro":
                 let descarte3 =mochila['inventario'].indexOf(jarro);
                 mochila['inventario'].splice(descarte3, 1);
+                localStorage.setItem('inventario', JSON.stringify(mochila.inventario));
                 break;
             case "capa":
                 let descarte4 =mochila['inventario'].indexOf(capa);
                 mochila['inventario'].splice(descarte4, 1);
+                localStorage.setItem('inventario', JSON.stringify(mochila.inventario));
                 break;
             case "yesca":
                 let descarte5 =mochila['inventario'].indexOf(yesca);
                 mochila['inventario'].splice(descarte5, 1);
+                localStorage.setItem('inventario', JSON.stringify(mochila.inventario));
                 break;
             case "pedernal":
                 let descarte6 =mochila['inventario'].indexOf(pedernal);
                 mochila['inventario'].splice(descarte6, 1);
+                localStorage.setItem('inventario', JSON.stringify(mochila.inventario));
                 break;
             default:
                 alert("La mochila estaba demasiado cargada y se ha roto, has perdido tus objetos");
                 mochila["inventario"]= [];
+                localStorage.setItem('inventario', JSON.stringify(mochila.inventario));
                 break;
         }    
     }else{
         alert("La mochila estaba demasiado cargada y se ha roto, has perdido tus objetos");
         mochila= [];
+        localStorage.setItem('inventario', JSON.stringify(mochila.inventario));
     }
     inputBtn.addEventListener('click', decidir);
 }
 function decidir() {
             random2(0,100);
 }
-//---------------------------------------------------------------------------------
-//----------------------FUNCION PARA ABRIR LA MOCHILA------------------------------
-//---------------------------------------------------------------------------------
-function abrirMochila() {
-        const dentroMochila = mochila.inventario.forEach(laMochila => {
-            let button = document.createElement("button");
-            button.innerText = laMochila.nombre;
-            button.value = laMochila.nombre;
-            divLaMochila.append(button)
-        });
-        btnMochila.style.display = "none";
-        alert("Mochila en progreso(Más funciones próximamente)")
-}
+
 
