@@ -408,8 +408,8 @@ function continuarCamino() {
         }    
     }else{
         alert("La mochila estaba demasiado cargada y se ha roto, has perdido tus objetos");
-        mochila= [];
-        localStorage.setItem('inventario', JSON.stringify(mochila.inventario));
+        mochila.inventario= [];
+        localStorage.clear();
     }
     inputBtn.addEventListener('click', decidir);
 }
