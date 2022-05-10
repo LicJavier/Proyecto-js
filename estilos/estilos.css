@@ -1,4 +1,4 @@
-.container{
+.container1{
     display: flex;
     flex-direction: column;
     width: 100%;
@@ -15,24 +15,24 @@ header{
     justify-content:space-around;
     height: 5vmax;
 }
-div.container header h1{
+div.container1 header h1{
     text-align: center;
     font-family:Verdana, Geneva, Tahoma, sans-serif;
     font-size: 3vmax;
 }
 
-div.container main{
+div.container1 main{
     height: 40vmax;
     width: 100%;
     background-image: url(../imagenes/pngegg.png);
     background-position: center;
     background-repeat: no-repeat;
-    background-size: 40%;
+    background-size: 55%;
     display: flex;
     flex-direction: column;
     align-items: center;
 }
-div.container main div#laMochila{
+div.container1 main div#laMochila{
     width: 15vmax;
     height: 15vmax;
     position: fixed;
@@ -44,13 +44,13 @@ div.container main div#laMochila{
     grid-template-columns: 1fr 1fr 1fr;
     grid-template-rows: 1fr 1fr 1fr;
 }
-div.container main div#laMochila button{
+div.container1 main div#laMochila button{
     font-size: 1em;
     font-family: Verdana, Geneva, Tahoma, sans-serif;
     background-color: rgba(167, 50, 14, 0.774);
     color: #fff;
 }
-div.container main div button#btnMochila{
+div.container1 main div button#btnMochila{
     grid-row: 2 / 3;
     grid-column: 2 / 3;
     width: 5vmax;
@@ -60,7 +60,7 @@ div.container main div button#btnMochila{
     background-color: rgba(167, 50, 14, 0.774);
     color: #000;
 }
-div.container main div.card{
+div.container1 main div.card1{
     height: 60%;
     width: 50%;
     text-align: center;
@@ -68,7 +68,7 @@ div.container main div.card{
     flex-direction: column;
     justify-content: flex-end;
 }
-div.container main div.card p{
+div.container1 main div.card1 p{
     font-family: Verdana, Geneva, Tahoma, sans-serif;
     color: #111;
     font-size: 1.5vmax;
@@ -76,7 +76,7 @@ div.container main div.card p{
     align-self: center;
     margin-bottom: 0;
 }
-div.container main div.card input{
+div.container1 main div.card1 input{
     width: 40%;
     font-size: 2vmax;
     align-self: center;
@@ -86,11 +86,11 @@ div.container main div.card input{
     background-color: rgb(172, 236, 167);
     font-family: Verdana, Geneva, Tahoma, sans-serif;
 }
-div.container main div.card input.input__login{
+div.container1 main div.card1 input.input__login{
     font-size: 1vmax;
 }
 
-div.container main div.card select{
+div.container1 main div.card1 select{
     width: 40%;
     font-size: 1.3vmax;
     align-self: center;
@@ -100,42 +100,29 @@ div.container main div.card select{
     background-color: rgb(172, 236, 167);
     font-family: Verdana, Geneva, Tahoma, sans-serif;
 }
-div.container main div.card input#botonJugable2{
+div.container1 main div.card1 input#botonJugable2{
     display: none;
 }
-div.container main input#botonJugable {
+div.container1 main input#botonJugable {
     background-color: rgb(8, 70, 27);
     color: #fff;
     align-self: center;
     justify-self: flex-start;
-    margin-top: 1em;
+    margin-top: 2em;
     font-size: 1.3vmax;
     font-family: Verdana, Geneva, Tahoma, sans-serif;
     height: 3vmax;
     width: 20%;
 }
-div.container main input#botonComenzar {
-    background-color: rgb(8, 70, 27);
-    color: #fff;
-    align-self: center;
-    justify-self: flex-start;
-    margin-top: 1em;
-    font-size: 1.3vmax;
-    font-family: Verdana, Geneva, Tahoma, sans-serif;
-    height: 3vmax;
-    width: 20%;
-}
-div.container footer{
+
+div.container1 footer{
     width: 100%;
     height: 5vmax;
     font-family: Verdana, Geneva, Tahoma, sans-serif;
     background-color:#3d3ada27;
 }
-div.container footer h4{
+div.container1 footer h4{
     text-align: center;
     font-size: 2vmax;
     margin: auto;
-}
-.apagado{
-    display: none;
 }

@@ -1,3 +1,4 @@
+localStorage.clear();
 //------------------------------------------------------------------------------------------
 //--------------------------------------CODIGO DEL JUEGO------------------------------------
 //------------------------------------------------------------------------------------------
@@ -17,55 +18,83 @@ class Personaje{
     //Creación de ataques por cada elemento, elegido por el usuario.
     //--------------------------------------------------------------
     atacar(){
-        switch (Personaje1.elemento) {
-            case "fuego":
-                alert(Personaje1.nombre + " lanzo ¡Llamarada!");
-                resultado = (npcJefe["vidaj"])   -   (Personaje1["ataque"]);
-                alert("A "+ npcJefe.nombrej + " le queda "    +    resultado   + " de vida") ;
-                break;
-            case "normal":
-                alert(Personaje1.nombre + " Blandió su espada!");
-                resultado = (npcJefe["vidaj"]) - (Personaje1["ataque"]);
-                alert("A "+ npcJefe.nombrej + " le queda "+ resultado + " de vida") ;
-                break;
-            case "agua":
-                alert(Personaje1.nombre + " Utilizó un Latigo de Agua!");
-                resultado = (npcJefe["vidaj"]) - (Personaje1["ataque"]);
-                alert("A "+ npcJefe.nombrej +" le queda "+ resultado + " de vida") ;
-                break;
-            case "viento":
-                alert(Personaje1.nombre + " Convocó un remolino!");
-                resultado = (npcJefe["vidaj"]) - (Personaje1["ataque"]);
-                alert("A "+ npcJefe.nombrej + " le queda "+ resultado + " de vida") ;
-                break;
-            case "tierra":
-                alert(Personaje1.nombre + " Lanzó una Estalactita!");
-                resultado = (npcJefe["vidaj"]) - (Personaje1["ataque"]);
-                alert("A "+ npcJefe.nombrej + " le queda " + resultado + " de vida") ;
-                break;
-            case "luz":
-                alert(Personaje1.nombre + " utilizó el hechizo: ¡Luz resplandeciente!");
-                resultado = (npcJefe["vidaj"]) - ((Personaje1["ataque"]) += 1);
-                alert("A "+ npcJefe.nombrej  + " le queda " + resultado + " de vida") ;
-                break;
-            case "oscuro":
-                alert(Personaje1.nombre + " lanzo ¡bola sombría!");
-                resultado = (npcJefe["vidaj"]) - ((Personaje1["ataque"]) -= 1);
-                alert("A "+ npcJefe.nombrej + " le queda " + resultado + " de vida") ;
-                break;        
-            default:
-                alert(Personaje1.nombre + " ¡golpeó a " + (npcJefe.nombrej)+ "con un puñetazo!");
-                resultado = (npcJefe["vidaj"]) - ((Personaje1["ataque"]) -= 1);
-                alert("A "+ npcJefe.nombrej + " le queda "+ resultado + " de vida") ;
-                break;
+        if(npcJefe.vidaj >0 && Personaje1.vida >0){
+            switch (Personaje1.elemento) {
+                case "fuego":
+                    npcJefe.vidaj -=(Personaje1.ataque);
+                    resultado = npcJefe["vidaj"];
+                    textoModificable.innerText = Personaje1.nombre +" lanzó ¡Llamarada!"+ "A "+ npcJefe.nombrej + " le queda "    +    resultado   + " de vida. ";
+                    console.log(resultado);
+                    movimientoJefe();
+                    break;
+                case "normal":
+                    npcJefe.vidaj -=(Personaje1.ataque);
+                    resultado = npcJefe["vidaj"];
+                    textoModificable.innerText = Personaje1.nombre +" ¡Blandió su espada!"+ "A "+ npcJefe.nombrej + " le queda "    +    resultado   + " de vida. ";
+                    movimientoJefe();
+                    break;
+                case "agua":
+                    npcJefe.vidaj = (npcJefe.vidaj) - (Personaje1.ataque);
+                    resultado = npcJefe["vidaj"];
+                    textoModificable.innerText = Personaje1.nombre +" Utilizó un Latigo de Agua!"+ "A "+ npcJefe.nombrej + " le queda "    +    resultado   + " de vida-. ";
+                    movimientoJefe();
+                    break;
+                case "viento":
+                    npcJefe.vidaj = (npcJefe.vidaj) - (Personaje1.ataque);
+                    resultado = npcJefe["vidaj"];
+                    textoModificable.innerText = Personaje1.nombre +" Convocó un remolino!"+ "A "+ npcJefe.nombrej + " le queda "    +    resultado   + " de vida. ";
+                    movimientoJefe();
+                    break;
+                case "tierra":
+                    npcJefe.vidaj = (npcJefe.vidaj) - (Personaje1.ataque);
+                    resultado = npcJefe["vidaj"];
+                    textoModificable.innerText = Personaje1.nombre +" Invocó una Estalactita!"+ "A "+ npcJefe.nombrej + " le queda "    +    resultado   + " de vida. ";
+                    movimientoJefe();
+                    break;
+                case "luz":
+                    npcJefe.vidaj = (npcJefe.vidaj) - ((Personaje1["ataque"]) += 1);
+                    resultado = npcJefe["vidaj"];
+                    textoModificable.innerText = Personaje1.nombre +" utilizó el hechizo: ¡Luz resplandeciente!"+ "A "+ npcJefe.nombrej + " le queda "    +    resultado   + " de vida. ";
+                    movimientoJefe();
+                    break;
+                case "oscuro":
+                    npcJefe.vidaj = (npcJefe["vidaj"]) - ((Personaje1["ataque"]) -= 1);
+                    resultado = npcJefe["vidaj"];
+                    textoModificable.innerText = Personaje1.nombre +" lanzo ¡bola sombría!"+ "A "+ npcJefe.nombrej + " le queda "    +    resultado   + " de vida. ";
+                    movimientoJefe();
+                    break;        
+                default:
+                    npcJefe.vidaj = (npcJefe.vidaj) - (Personaje1.ataque);
+                    resultado = npcJefe["vidaj"];
+                    textoModificable.innerText = Personaje1.nombre +" ¡golpeó con un puñetazo!"+ "A "+ npcJefe.nombrej + " le queda "    +    resultado   + " de vida. ";
+                    movimientoJefe();
+                    break;
+            }
+            inputBtn.removeEventListener('click', ()=> Personaje1.atacar());
+            volver.removeEventListener('click', ()=> Personaje1.defender());
         }
-    }
+        }
+        
+    //Utilización de operador Avanzado +=
     defender(){
-        alert(Personaje1.nombre + " Utilizo Poción revitalizadora y ganó 2 puntos de vida");
-        Personaje1.vida = (Personaje1.vida)+=2;
-        return Personaje1.vida;
+        textoModificable.innerText = Personaje1.nombre + " Utilizo Poción revitalizadora y ganó 2 puntos de vida";
+        npcJefe.vidaj > 0 ? random(1,2): textoModificable.innerText = 'Hemos vencido!'; 
+        inputBtn.removeEventListener('click', Personaje1.atacar);
+        volver.removeEventListener('click', Personaje1.defender);
+        Personaje1.vida += 2;
     }
 }
+function movimientoJefe() {
+    npcJefe.vidaj > 0 ? random(1,2) : muerteJefe();
+    // if(npcJefe.vidaj <= 0){
+    //     muerteJefe();
+    // } else if(npcJefe.vidaj >0){
+    //     random(1,2);
+    // }
+}
+
+
+
 //--------------------------------------------------------------
 //------------Creación de NPC Jefe para combatir----------------
 //--------------------------------------------------------------
@@ -78,21 +107,19 @@ class NpcJefe{
         this.ataquej    = ataquej;
     }
     atacar(){
-        if (npcJefe["vidaJ"]>0) {
-            alert(npcJefe.nombrej + " lanzó ¡Bola sombría!");
         let resultado = (Personaje1["vida"]) - (npcJefe["ataquej"]);
-        alert("A " + (Personaje1.nombre) + " le queda "+ resultado + " de vida") ;
-        return resultado;
-        } else if(npcJefe["vidaj"] <=0){
-            alert(`Me las pagarás ${Personaje1.nombre}...`)
-        }
-        
+        textoModificable.innerText += `${npcJefe.nombrej} lanzó ¡Bola sombría!, a ${nombre} le queda ${resultado} de vida`;
     }
+    // operador avanzado para aumentar vidaj
     defender(){
-        npcJefe["vidaj"] = npcJefe["vidaj"] + 1;
-        alert((npcJefe.nombrej) + " se escondio y recupero 1 punto de vida");
-    }
+            npcJefe["vidaj"] ++;
+            textoModificable.innerText += `${npcJefe.nombrej} se cubrio con su capa y recupero 1 punto de vida`;
+        }
 }
+// inputBtn.addEventListener('click',()=> Personaje1.atacar())
+// volver.addEventListener('click', ()=> Personaje1.defender())
+// inputBtn.removeEventListener('click', ()=> Personaje1.atacar());
+// volver.removeEventListener('click', ()=> Personaje1.defender());
 //--------------------------------------------------------------
 //----------Creación de los objetos del juego-------------------
 //--------------------------------------------------------------
@@ -112,6 +139,7 @@ class Mochila extends Objeto{
         this.capacidad = capacidad;
         this.inventario = inventario;
     }
+    //funcion temporalmente no disponible
     eliminarObjeto(){
         
     }
@@ -123,7 +151,7 @@ const Elementos = ["normal", "fuego", "agua", "viento", "tierra", "luz", "oscuro
 //---------------------------------------------------------------------------------
 //--------------------------Creación de la mochila---------------------------------
 //---------------------------------------------------------------------------------
-const mochila = new Mochila(1, "mochila", 20, 1, 7);;
+const mochila        = new Mochila(1, "mochila", 20, 1, 7);;
 const baculo         = new Objeto(1, "báculo", 15, 1);
 const bolsaDeMonedas = new Objeto(2, "bolsa de monedas", 1, 1);
 const capa           = new Objeto(3, "capa", 25, 1);
@@ -172,34 +200,47 @@ function cerrarMochila() {
     btnMochila.addEventListener("click", abrirMochila);
 }
 
-//---------------------------------------------------------------------------------
-//--------------------------Creacion de Objetos --Monedas--------------------------
-//---------------------------------------------------------------------------------
-class Moneda extends Objeto{
-    constructor(id,nombre,valor,cantidad){
-        super(id,nombre,valor,cantidad)
-    }
+//--------------------------------------------------------------------------------------------------------------
+//--------------------------Creacion de Objetos --Monedas-(TEMPORALMENTE-NO-DISPONIBLE)-SPREAD DE OBJETOS-------
+//--------------------------------------------------------------------------------------------------------------
+const penique ={
+    ...baculo,
+    nombre: "penique de bronce",
+    valor: 1,
 }
-const penique = new Moneda(1,"peñique de bronce", 1, 1);
-const chelin = new Moneda(2,"chelin de plata",((penique.valor)*12), 1);
-const corona = new Moneda(3, "corona de oro", ((chelin.valor)*20), 1);
+const chelin ={
+    ...penique,
+    nombre:"chelin de plata",
+    id: 2,
+    valor: penique.valor*12
+}
+const corona ={
+    ...chelin,
+    nombre:"corona de oro",
+    id:3,
+    valor: chelin.valor*20
+}
 //---------------------------------------------------------------------------------
 //Declaracion de las variables para crear las caracteristicas del personaje
 //---------------------------------------------------------------------------------
-let nombre = "";
-let elemento = [];
+//---------------------------------------------------------------------------------
+//----------------------DESESTRUCTURACION-OBJETO-PERSONAJE-------------------------
+//---------------------------------------------------------------------------------
 let Personaje1 = [];
+let {nombre, elemento, vida, ataque} = Personaje1;
+
 //---------------------------------------------------------------------------------
 //-------------------inputs para Creación del Persdonaje---------------------------
 //---------------------------------------------------------------------------------
 let inputText = document.getElementById("inputJugable");
+inputText.setAttribute('minlength','4');
 let inputBtn = document.getElementById("botonJugable");
 let textoModificable = document.getElementById("textoModificable");
 let inputElemento = document.getElementById("InputElemento");
 let seleccionElemento = document.createElement("option");
 let titulo = document.getElementById("titulo");
 seleccionElemento.innerText = "Seleccionar un elemento";
-seleccionElemento.value= "";
+seleccionElemento.value= -1;
 inputElemento.append(seleccionElemento);
 
 //--------------------------------------------
@@ -211,24 +252,33 @@ Elementos.forEach( (elemento, iElemento) => {
     option.value = iElemento;
     inputElemento.append(option)
 });
-//-----------------------------------------------
-//Obteniendo el arma y colocandola en la mochila
-//-------------------------------------------------
+//---------------------------------------------------------------------------
+//------------Obteniendo el arma y colocandola en la mochila-----------------
+//---------------------------------------------------------------------------
 function Arma() {
-    switch (inputElemento.value) {
-        case '0':
-            mochila.inventario.push(espada);
-            break;
-        default:
-            mochila.inventario.push(baculo);
-            break;
-    }
+    //-----------------------------------------------------------------------
+    //------------------APLICANDO-OPERADOR-TERNARIO--------------------------
+    //-----------------------------------------------------------------------
+    inputElemento.value == 0 ? mochila.inventario.push(espada) : mochila.inventario.push(baculo);
+    // switch (inputElemento.value) {
+    //     case '0':
+    //         mochila.inventario.push(espada);
+    //         break;
+    //     default:
+    //         mochila.inventario.push(baculo);
+    //         break;
+    // }
     localStorage.setItem('inventario', JSON.stringify(mochila.inventario));
 }
 //------------------------------------------------------------------
 //------------------Funcion de Primer CLICK-------------------------
 //------------------------------------------------------------------
 function primerClick() {
+    inputText.value !== "" && inputElemento.value != -1 ? primerPaso() : alert("Ingresa un nombre y un elemento") ;
+    
+}
+
+function primerPaso() {
     //Eleccion del Nombre
     let nombreJ1 = inputText.value;
     titulo.innerText = `Bienvenido ${nombreJ1}`;
@@ -244,10 +294,11 @@ function primerClick() {
     inputBtn.removeEventListener('click', primerClick);
 }
 inputBtn.addEventListener('click', primerClick);
+
 //------------------------------------------------------
 //--------------------Creación Del NPC------------------
 //------------------------------------------------------
-const npcJefe = new NpcJefe('Lotor el Jefe Oscuro', 'Oscuro', 5, 1);
+const npcJefe = new NpcJefe('Lotor el Jefe Oscuro', 'Oscuro', 10, 1);
 //---------------------------------------------------------------------------------
 //----------------------funcion para ataque aleatorio del NPC----------------------
 //---------------------------------------------------------------------------------
@@ -286,39 +337,34 @@ function random2(min, max) {
 //------------------Función de combate utilizando While----------------------------
 //---------------------------------------------------------------------------------
 function combate(){
-    alert("¡"+ (npcJefe.nombrej) + " ha aparecido!")
-    while((npcJefe.vidaj) > 0 && (Personaje1.vida) > 0){
-        let accion = prompt("Ingresa 1 para atacar o 2 defender");
-        let atacar = 1;
-        let defender = 2
-        if(accion == atacar){
-            Personaje1.atacar();
-            npcJefe.vidaj = (npcJefe.vidaj) - (Personaje1.ataque);
-            if(npcJefe.vidaj <= 0){
-                textoModificable.innerText = `Lotor a caído...  ¡Felicitaciones lo lograste!`;
-                inputBtn.removeEventListener('click',combate);
-                volver.removeEventListener('click', combate);
-                inputBtn.removeEventListener('click', decidir)
-                inputBtn.value = "Continuara...";
-                volver.value = "Fin...";
-                break;
-            }
-        }else if(accion == defender){
-            Personaje1.defender();
-        }
-        random(1,2)
-        if (Personaje1.vida <=0){
-            textoModificable.innerText = `${nombre} Ha caído en combate guerrero`;
-            inputBtn.removeEventListener('click',combate);
-            break;
-        }
-    }
-    inputBtn.removeEventListener('click',combate);
     inputBtn.removeEventListener('click', continuarCamino)
+    inputBtn.removeEventListener('click',combate);
+    textoModificable.innerText = `¡Lotor el Señor Oscuro apareció!`;
+    inputBtn.addEventListener('click',()=> Personaje1.atacar())
+    volver.addEventListener('click', ()=> Personaje1.defender())
+    inputBtn.value = "Atacar";
+    volver.value = "Defender";
+}
+//-----------------------------------------------------------------------------------------------------------------
+//--------------------Se añade la muerte del Jege y jugador a una funcion para ahorrar codigo----------------------
+//-----------------------------------------------------------------------------------------------------------------
+function muerte() {
+    inputBtn.removeEventListener('click',combate);
+    volver.removeEventListener('click', combate);
+    inputBtn.removeEventListener('click', decidir);
+    inputBtn.removeEventListener('click', ()=> Personaje1.atacar());
+    volver.removeEventListener('click', ()=> Personaje1.defender());
     inputBtn.value = "Continuara...";
     volver.value = "Fin...";
 }
-
+function muertePj() {
+    muerte();
+    textoModificable.innerText =  `${nombre} Has caído en combate noble guerrero`;
+}
+function muerteJefe() {
+    muerte();
+    textoModificable.innerText = `Lotor a caído...  ¡Felicitaciones lo lograste!`;
+}
 //--------------------------------------------
 //Declarando el div Padre para modificar
 //--------------------------------------------
@@ -353,7 +399,6 @@ function primeraEleccion() {
 //---------------------------------------------------------------
 //--------------------Continuando el Camino----------------------
 //---------------------------------------------------------------
-let decision = 0;
 function continuarCamino() {
     textoModificable.innerText = "El puente se observa en mal estado, presiona continuar para seguir o volver para regresar a la cueva";
     inputBtn.removeEventListener('click', continuarCamino);
@@ -361,57 +406,7 @@ function continuarCamino() {
     alert("Has encontrado Pociones revitalizadoras en el piso, se han agregado a tú Mochila")
     mochila.inventario.push(pocionHp);
     pocionHp.cantidad = 5;
-    alert("Tu mochila esta llena! debes elegir un elemento para tirar")
-    const verMochila = confirm("¿Deseas ver dentro de la mochila?");
-    if (verMochila == true){
-        const dentroMochila = mochila.inventario.forEach(laMochila => {
-            alert(laMochila.nombre);
-        });
-        let elegirDescarte = (prompt("Elegí un elemento a descartar"));
-        //capa,yesca,pedernal
-        switch (elegirDescarte) {
-            case "manta":
-                let descarte =mochila['inventario'].indexOf(manta);
-                mochila['inventario'].splice(descarte, 1);
-                localStorage.setItem('inventario', JSON.stringify(mochila.inventario));
-                break;
-            case "soga":
-                let descarte2 =mochila['inventario'].indexOf(soga);
-                mochila['inventario'].splice(descarte2, 1);
-                localStorage.setItem('inventario', JSON.stringify(mochila.inventario));
-                break;
-            case "jarro":
-                let descarte3 =mochila['inventario'].indexOf(jarro);
-                mochila['inventario'].splice(descarte3, 1);
-                localStorage.setItem('inventario', JSON.stringify(mochila.inventario));
-                break;
-            case "capa":
-                let descarte4 =mochila['inventario'].indexOf(capa);
-                mochila['inventario'].splice(descarte4, 1);
-                localStorage.setItem('inventario', JSON.stringify(mochila.inventario));
-                break;
-            case "yesca":
-                let descarte5 =mochila['inventario'].indexOf(yesca);
-                mochila['inventario'].splice(descarte5, 1);
-                localStorage.setItem('inventario', JSON.stringify(mochila.inventario));
-                break;
-            case "pedernal":
-                let descarte6 =mochila['inventario'].indexOf(pedernal);
-                mochila['inventario'].splice(descarte6, 1);
-                localStorage.setItem('inventario', JSON.stringify(mochila.inventario));
-                break;
-            default:
-                alert("La mochila estaba demasiado cargada y se ha roto, has perdido tus objetos");
-                mochila["inventario"]= [];
-                localStorage.setItem('inventario', JSON.stringify(mochila.inventario));
-                break;
-        }    
-    }else{
-        alert("La mochila estaba demasiado cargada y se ha roto, has perdido tus objetos");
-        mochila.inventario= [];
-        localStorage.clear();
-    }
-    inputBtn.addEventListener('click', decidir);
+    localStorage.setItem('inventario', JSON.stringify(mochila.inventario));
 }
 function decidir() {
             random2(0,100);
