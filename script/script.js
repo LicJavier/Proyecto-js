@@ -7,7 +7,6 @@ let resultado = 0;
 //------------Creación del personaje del Usuario----------------
 //--------------------------------------------------------------
 class Personaje{
-
     constructor(nombre,elemento,vida,ataque){
         this.nombre     =   nombre;
         this.elemento   =   elemento;
@@ -73,9 +72,8 @@ class Personaje{
             inputBtn.removeEventListener('click', ()=> Personaje1.atacar());
             volver.removeEventListener('click', ()=> Personaje1.defender());
         }
-        }
-        
-    //Utilización de operador Avanzado +=
+    }  
+    //Utilización de operador Avanzado 
     defender(){
         textoModificable.innerText = Personaje1.nombre + " Utilizo Poción revitalizadora y ganó 2 puntos de vida";
         npcJefe.vidaj > 0 ? random(1,2): textoModificable.innerText = 'Hemos vencido!'; 
@@ -92,14 +90,10 @@ function movimientoJefe() {
     //     random(1,2);
     // }
 }
-
-
-
 //--------------------------------------------------------------
 //------------Creación de NPC Jefe para combatir----------------
 //--------------------------------------------------------------
 class NpcJefe{
-
     constructor(nombrej, elementoj, vidaj, ataquej){
         this.nombrej    = nombrej;
         this.elementoj  = elementoj;
@@ -108,23 +102,18 @@ class NpcJefe{
     }
     atacar(){
         let resultado = (Personaje1["vida"]) - (npcJefe["ataquej"]);
-        textoModificable.innerText += `${npcJefe.nombrej} lanzó ¡Bola sombría!, a ${nombre} le queda ${resultado} de vida`;
+        textoModificable.innerText += ` ${npcJefe.nombrej} lanzó ¡Bola sombría!, a ${nombre} le queda ${resultado} de vida`;
     }
     // operador avanzado para aumentar vidaj
     defender(){
             npcJefe["vidaj"] ++;
-            textoModificable.innerText += `${npcJefe.nombrej} se cubrio con su capa y recupero 1 punto de vida`;
+            textoModificable.innerText += ` ${npcJefe.nombrej} se cubrio con su capa y recupero 1 punto de vida`;
         }
 }
-// inputBtn.addEventListener('click',()=> Personaje1.atacar())
-// volver.addEventListener('click', ()=> Personaje1.defender())
-// inputBtn.removeEventListener('click', ()=> Personaje1.atacar());
-// volver.removeEventListener('click', ()=> Personaje1.defender());
 //--------------------------------------------------------------
 //----------Creación de los objetos del juego-------------------
 //--------------------------------------------------------------
 class Objeto{
-
     constructor(id, nombre, valor, cantidad ){
         this.id = id;
         this.nombre = nombre;
@@ -133,7 +122,6 @@ class Objeto{
     }
 }
 class Mochila extends Objeto{
-
     constructor(id, nombre, valor, cantidad, capacidad, inventario){
         super(id, nombre, valor, cantidad);
         this.capacidad = capacidad;
@@ -162,13 +150,12 @@ const pedernal       = new Objeto(7, "pedernal", 5, 1);
 const pocionHp       = new Objeto(8, "poción revitalizadora", 5, 1);
 const soga           = new Objeto(9, "soga", 5, 1);
 const yesca          = new Objeto(10, "yesca", 5, 1);
-
+//-------------------------------------------------------------------------
 mochila.inventario =[capa, jarro, manta, pedernal, soga, yesca];
 localStorage.setItem('inventario', JSON.stringify(mochila.inventario));
 let divLaMochila = document.getElementById("laMochila");
 let btnMochila = document.getElementById("btnMochila");
 btnMochila.addEventListener('click', abrirMochila);
-
 //---------------------------------------------------------------------------------
 //----------------------FUNCION PARA ABRIR LA MOCHILA------------------------------
 //---------------------------------------------------------------------------------
@@ -185,7 +172,7 @@ function abrirMochila() {
         divLaMochila.append(button);
     }
     )
-    alert("Mochila en progreso(Más funciones próximamente)")
+    toastyMochila();
     btnMochila.removeEventListener('click', abrirMochila);
     btnMochila.addEventListener('click', cerrarMochila);
 }
@@ -199,7 +186,6 @@ function cerrarMochila() {
     btnMochila.removeEventListener('click', cerrarMochila);
     btnMochila.addEventListener("click", abrirMochila);
 }
-
 //--------------------------------------------------------------------------------------------------------------
 //--------------------------Creacion de Objetos --Monedas-(TEMPORALMENTE-NO-DISPONIBLE)-SPREAD DE OBJETOS-------
 //--------------------------------------------------------------------------------------------------------------
@@ -242,7 +228,6 @@ let titulo = document.getElementById("titulo");
 seleccionElemento.innerText = "Seleccionar un elemento";
 seleccionElemento.value= -1;
 inputElemento.append(seleccionElemento);
-
 //--------------------------------------------
 //Agregamos los elementos a un select a través de un ForEach
 //--------------------------------------------
@@ -274,10 +259,23 @@ function Arma() {
 //------------------Funcion de Primer CLICK-------------------------
 //------------------------------------------------------------------
 function primerClick() {
-    inputText.value !== "" && inputElemento.value != -1 ? primerPaso() : alert("Ingresa un nombre y un elemento") ;
+    inputText.value !== "" && inputElemento.value != -1 ? primerPaso() : alertaInput() ;
     
 }
-
+function toastyMochila() {
+    Toastify({
+        text: "Mochila en progreso (Más funciones próximamente)",
+        duration: 2000
+        }).showToast();
+}
+function alertaInput(){
+    swal({
+        title: "Un Momento!",
+        text: "Tu personaje merece un nombre y elegir un elemento para seguir!",
+        icon: "warning",
+        button: "ok, entendí",
+    });
+}    
 function primerPaso() {
     //Eleccion del Nombre
     let nombreJ1 = inputText.value;
@@ -294,7 +292,6 @@ function primerPaso() {
     inputBtn.removeEventListener('click', primerClick);
 }
 inputBtn.addEventListener('click', primerClick);
-
 //------------------------------------------------------
 //--------------------Creación Del NPC------------------
 //------------------------------------------------------
@@ -376,8 +373,6 @@ let volver = document.getElementById("botonJugable2");
 //------------------------------------------------------
 //--------------INICIO DE LA AVENTURA-------------------
 //------------------------------------------------------
-let camino = 0;
-
 function Inicio() {
     inputElemento.style.display = "none";
     inputText.style.display = "none";
@@ -403,7 +398,7 @@ function continuarCamino() {
     textoModificable.innerText = "El puente se observa en mal estado, presiona continuar para seguir o volver para regresar a la cueva";
     inputBtn.removeEventListener('click', continuarCamino);
     inputBtn.addEventListener('click', decidir);
-    alert("Has encontrado Pociones revitalizadoras en el piso, se han agregado a tú Mochila")
+    alertaEncontrado();
     mochila.inventario.push(pocionHp);
     pocionHp.cantidad = 5;
     localStorage.setItem('inventario', JSON.stringify(mochila.inventario));
@@ -411,5 +406,7 @@ function continuarCamino() {
 function decidir() {
             random2(0,100);
 }
-
+function alertaEncontrado() {
+    swal("Has encontrado Pociones revitalizadoras en el piso", "Se han agregado a tú Mochila!","success",);
+}
 

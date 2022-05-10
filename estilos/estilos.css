@@ -71,7 +71,7 @@ div.container1 main div.card1{
 div.container1 main div.card1 p{
     font-family: Verdana, Geneva, Tahoma, sans-serif;
     color: #111;
-    font-size: 1.5vmax;
+    font-size: 1.3vmax;
     width: 40%;
     align-self: center;
     margin-bottom: 0;
@@ -125,4 +125,20 @@ div.container1 footer h4{
     text-align: center;
     font-size: 2vmax;
     margin: auto;
+}
+.swal-overlay {
+    background-color: rgba(33, 110, 92, 0.45);
+}
+.swal-modal {
+    border: 3px solid rgb(175, 18, 18);
+    color: #fff;
+}
+.swal-title{
+    color: #111;
+}
+.swal-text {
+    display: block;
+    margin: 22px;
+    text-align: center;
+    color: #111;
 }
