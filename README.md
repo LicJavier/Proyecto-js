@@ -7,3 +7,6 @@ Se creo un array de elementos y un promt para que el usuario elija el suyo.
 Se utilizó switch y prompt para elegir el camino.
 Se utilizó function con bucle while para interacción de combate.
 Se utilizó switch y math.random para determinar aleatoriamente un destino.
+21/05/22
+Se eliminaron constantes de objetos y se añadieron a traves de fetch de un archivo Json.
+Se elimino un pequeño bug con removeEventListener donde al entrar en combate seguia caminando.

@@ -139,19 +139,31 @@ const Elementos = ["normal", "fuego", "agua", "viento", "tierra", "luz", "oscuro
 //---------------------------------------------------------------------------------
 //--------------------------Creación de la mochila---------------------------------
 //---------------------------------------------------------------------------------
-const mochila        = new Mochila(1, "mochila", 20, 1, 7);;
+const mochila        = new Mochila(1, "mochila", 20, 1, 9);;
+fetch("/json/object.json").then(
+    (Response) =>{
+        return Response.json();
+    }).then((objetosJson) =>{
+        objetosJson.forEach((objetos) => {
+        mochila.inventario.push(   new Objeto( objetos.id, objetos.nombre, objetos.valor, objetos.cantidad)   )    
+        }
+
+        )
+        console.log(objetosJson);
+    })
+    
 const baculo         = new Objeto(1, "báculo", 15, 1);
-const bolsaDeMonedas = new Objeto(2, "bolsa de monedas", 1, 1);
-const capa           = new Objeto(3, "capa", 25, 1);
+// const bolsaDeMonedas = new Objeto(2, "bolsa de monedas", 1, 1);
+// const capa           = new Objeto(3, "capa", 25, 1);
 const espada         = new Objeto(4, "espada", 15, 1);
-const jarro          = new Objeto(5, "jarro", 5, 1);
-const manta          = new Objeto(6, "manta", 20, 1);
-const pedernal       = new Objeto(7, "pedernal", 5, 1);
+// const jarro          = new Objeto(5, "jarro", 5, 1);
+// const manta          = new Objeto(6, "manta", 20, 1);
+// const pedernal       = new Objeto(7, "pedernal", 5, 1);
 const pocionHp       = new Objeto(8, "poción revitalizadora", 5, 1);
-const soga           = new Objeto(9, "soga", 5, 1);
-const yesca          = new Objeto(10, "yesca", 5, 1);
+// const soga           = new Objeto(9, "soga", 5, 1);
+// const yesca          = new Objeto(10, "yesca", 5, 1);
 //-------------------------------------------------------------------------
-mochila.inventario =[capa, jarro, manta, pedernal, soga, yesca];
+mochila.inventario =[];
 localStorage.setItem('inventario', JSON.stringify(mochila.inventario));
 let divLaMochila = document.getElementById("laMochila");
 let btnMochila = document.getElementById("btnMochila");
@@ -336,6 +348,7 @@ function random2(min, max) {
 function combate(){
     inputBtn.removeEventListener('click', continuarCamino)
     inputBtn.removeEventListener('click',combate);
+    inputBtn.removeEventListener('click', decidir);
     textoModificable.innerText = `¡Lotor el Señor Oscuro apareció!`;
     inputBtn.addEventListener('click',()=> Personaje1.atacar())
     volver.addEventListener('click', ()=> Personaje1.defender())

@@ -1,0 +1,9 @@
+[
+    {"id": 2, "nombre":"bolsa de monedas", "valor": 1, "cantidad": 1 },
+    {"id": 3, "nombre":"capa", "valor": 25, "cantidad": 1 },
+    {"id": 5, "nombre":"jarro", "valor": 5, "cantidad": 1 },
+    {"id": 6, "nombre":"manta", "valor": 20, "cantidad": 1 },
+    {"id": 7, "nombre":"pedernal", "valor": 5, "cantidad": 1 },
+    {"id": 9, "nombre":"soga", "valor": 5, "cantidad": 1 },
+    {"id": 10, "nombre":"yesca", "valor": 5, "cantidad": 1 }
+]
