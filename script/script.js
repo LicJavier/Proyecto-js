@@ -139,7 +139,7 @@ const Elementos = ["normal", "fuego", "agua", "viento", "tierra", "luz", "oscuro
 //--------------------------Creación de la mochila---------------------------------
 //---------------------------------------------------------------------------------
 const mochila        = new Mochila(1, "mochila", 20, 1, 9);;
-fetch("/json/object.json").then(
+fetch("./json/object.json").then(
     (Response) =>{
         return Response.json();
     }).then((objetosJson) =>{
