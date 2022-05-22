@@ -129,7 +129,6 @@ class Mochila extends Objeto{
     }
     //funcion temporalmente no disponible
     eliminarObjeto(){
-        
     }
 }
 //---------------------------------------------------------------------------------
@@ -146,10 +145,7 @@ fetch("/json/object.json").then(
     }).then((objetosJson) =>{
         objetosJson.forEach((objetos) => {
         mochila.inventario.push(   new Objeto( objetos.id, objetos.nombre, objetos.valor, objetos.cantidad)   )    
-        }
-
-        )
-        console.log(objetosJson);
+        })
     })
     
 const baculo         = new Objeto(1, "báculo", 15, 1);
@@ -182,11 +178,20 @@ function abrirMochila() {
         button.value = laMochila.nombre;
         button.classList.add("mochila")
         divLaMochila.append(button);
-    }
+        button.setAttribute('id', button.value)
+        button.addEventListener('click', ()=>{
+            eliminarSweetObject();
+            setTimeout(pregunta, 3000);
+            })
+        
+        }
     )
     toastyMochila();
     btnMochila.removeEventListener('click', abrirMochila);
     btnMochila.addEventListener('click', cerrarMochila);
+}
+function pregunta(){
+    tirar === true ? console.log("se tiro") : console.log("no se tiro nada")
 }
 //---------------------------------------------------------------------------------
 //----------------------FUNCION PARA CERRAR LA MOCHILA------------------------------
@@ -422,4 +427,30 @@ function decidir() {
 function alertaEncontrado() {
     swal("Has encontrado Pociones revitalizadoras en el piso", "Se han agregado a tú Mochila!","success",);
 }
-
+let tirar = false;
+function eliminarSweetObject() {
+    swal({
+        title: "Estas seguro de tirar el objeto?",
+        text: "Una vez que lo tires, no lo podras recuperar!",
+        icon: "warning",
+        buttons: true,
+        dangerMode: true,
+    })
+    .then((willDelete) => {
+        if (willDelete) {
+        seCayo();
+        tirar = true;
+        } else {
+        loConservo();
+        tirar = false;
+        }
+    });
+}
+function seCayo() {
+    swal("Poof! tu objeto ha caído al suelo y se ha perdido", {
+        icon: "success",
+    });
+}
+function loConservo() {
+    swal("has conservado el objeto!");
+}

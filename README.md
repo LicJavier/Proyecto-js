@@ -10,3 +10,5 @@ Se utilizó switch y math.random para determinar aleatoriamente un destino.
 21/05/22
 Se eliminaron constantes de objetos y se añadieron a traves de fetch de un archivo Json.
 Se elimino un pequeño bug con removeEventListener donde al entrar en combate seguia caminando.
+Se cambio el nombre de la rama a main.
+Se añadieron las alertas para eliminar objetos de la mochila(la funcion esta pendiente).
