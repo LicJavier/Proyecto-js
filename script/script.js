@@ -57,7 +57,7 @@ class Personaje{
                     movimientoJefe();
                     break;
                 case "oscuro":
-                    npcJefe.vidaj = (npcJefe["vidaj"]) - ((Personaje1["ataque"]) -= 1);
+                    npcJefe.vidaj = (npcJefe["vidaj"]) - ((Personaje1["ataque"]) - 1);
                     resultado = npcJefe["vidaj"];
                     textoModificable.innerText = Personaje1.nombre +" lanzo ¡bola sombría!"+ "A "+ npcJefe.nombrej + " le queda "    +    resultado   + " de vida. ";
                     movimientoJefe();
@@ -84,6 +84,7 @@ class Personaje{
 }
 function movimientoJefe() {
     npcJefe.vidaj > 0 ? random(1,2) : muerteJefe();
+    Personaje1.vida <= 0 ? muertePj(): console.log('sigue la pelea.')
     // if(npcJefe.vidaj <= 0){
     //     muerteJefe();
     // } else if(npcJefe.vidaj >0){
@@ -94,9 +95,8 @@ function movimientoJefe() {
 //------------Creación de NPC Jefe para combatir----------------
 //--------------------------------------------------------------
 class NpcJefe{
-    constructor(nombrej, elementoj, vidaj, ataquej){
+    constructor(nombrej, vidaj, ataquej){
         this.nombrej    = nombrej;
-        this.elementoj  = elementoj;
         this.vidaj      = vidaj;
         this.ataquej    = ataquej;
     }
@@ -127,9 +127,6 @@ class Mochila extends Objeto{
         this.capacidad = capacidad;
         this.inventario = inventario;
     }
-    //funcion temporalmente no disponible
-    eliminarObjeto(){
-    }
 }
 //---------------------------------------------------------------------------------
 //--------------------------Array de elementos-------------------------------------
@@ -148,14 +145,14 @@ fetch("./json/object.json").then(
         })
     })
     
-const baculo         = new Objeto(1, "báculo", 15, 1);
+const baculo         = new Objeto(1, "baculo", 15, 1);
 // const bolsaDeMonedas = new Objeto(2, "bolsa de monedas", 1, 1);
 // const capa           = new Objeto(3, "capa", 25, 1);
 const espada         = new Objeto(4, "espada", 15, 1);
 // const jarro          = new Objeto(5, "jarro", 5, 1);
 // const manta          = new Objeto(6, "manta", 20, 1);
 // const pedernal       = new Objeto(7, "pedernal", 5, 1);
-const pocionHp       = new Objeto(8, "poción revitalizadora", 5, 1);
+const pocionHp       = new Objeto(8, "pocion", 5, 1);
 // const soga           = new Objeto(9, "soga", 5, 1);
 // const yesca          = new Objeto(10, "yesca", 5, 1);
 //-------------------------------------------------------------------------
@@ -172,27 +169,21 @@ let arrayMochila = JSON.parse(mochilaJson);
 function abrirMochila() {
     mochilaJson = localStorage.getItem('inventario');
     arrayMochila = JSON.parse(mochilaJson);
-    const inventarioNombres = arrayMochila.forEach( laMochila =>{
+    arrayMochila.forEach( laMochila =>{
         let button = document.createElement("button");
         button.innerText = laMochila.nombre;
         button.value = laMochila.nombre;
         button.classList.add("mochila")
         divLaMochila.append(button);
         button.setAttribute('id', button.value)
-        button.addEventListener('click', ()=>{
-            eliminarSweetObject();
-            setTimeout(pregunta, 3000);
-            })
-        
         }
     )
     toastyMochila();
     btnMochila.removeEventListener('click', abrirMochila);
     btnMochila.addEventListener('click', cerrarMochila);
+    setTimeout(obtenerObjetosMochila(), 500) ;
 }
-function pregunta(){
-    tirar === true ? console.log("se tiro") : console.log("no se tiro nada")
-}
+
 //---------------------------------------------------------------------------------
 //----------------------FUNCION PARA CERRAR LA MOCHILA------------------------------
 //---------------------------------------------------------------------------------
@@ -236,7 +227,7 @@ let {nombre, elemento, vida, ataque} = Personaje1;
 //-------------------inputs para Creación del Persdonaje---------------------------
 //---------------------------------------------------------------------------------
 let inputText = document.getElementById("inputJugable");
-inputText.setAttribute('minlength','4');
+inputText.setAttribute('minlength','3');
 let inputBtn = document.getElementById("botonJugable");
 let textoModificable = document.getElementById("textoModificable");
 let inputElemento = document.getElementById("InputElemento");
@@ -261,7 +252,7 @@ function Arma() {
     //-----------------------------------------------------------------------
     //------------------APLICANDO-OPERADOR-TERNARIO--------------------------
     //-----------------------------------------------------------------------
-    inputElemento.value == 0 ? mochila.inventario.push(espada) : mochila.inventario.push(baculo);
+    inputElemento.value === "0" ? mochila.inventario.push(espada) : mochila.inventario.push(baculo);
     // switch (inputElemento.value) {
     //     case '0':
     //         mochila.inventario.push(espada);
@@ -276,7 +267,7 @@ function Arma() {
 //------------------Funcion de Primer CLICK-------------------------
 //------------------------------------------------------------------
 function primerClick() {
-    inputText.value !== "" && inputElemento.value != -1 ? primerPaso() : alertaInput() ;
+    inputText.value !== "" && inputElemento.value !== -1 ? primerPaso() : alertaInput() ;
     
 }
 function toastyMochila() {
@@ -312,16 +303,16 @@ inputBtn.addEventListener('click', primerClick);
 //------------------------------------------------------
 //--------------------Creación Del NPC------------------
 //------------------------------------------------------
-const npcJefe = new NpcJefe('Lotor el Jefe Oscuro', 'Oscuro', 10, 1);
+const npcJefe = new NpcJefe('Lotor el Jefe Oscuro', 10, 1);
 //---------------------------------------------------------------------------------
 //----------------------funcion para ataque aleatorio del NPC----------------------
 //---------------------------------------------------------------------------------
 function random(min, max) {
     let resultado = Math.floor((Math.random() * (max - min + 1)) + min);
-    if(resultado == 1){
+    if(resultado === 1){
         npcJefe.atacar();
         Personaje1.vida = (Personaje1.vida) - (npcJefe.ataquej);
-    }else if(resultado == 2) {
+    }else if(resultado === 2) {
         npcJefe.defender();
     }
     return resultado
@@ -355,8 +346,8 @@ function combate(){
     inputBtn.removeEventListener('click',combate);
     inputBtn.removeEventListener('click', decidir);
     textoModificable.innerText = `¡Lotor el Señor Oscuro apareció!`;
-    inputBtn.addEventListener('click',()=> Personaje1.atacar())
-    volver.addEventListener('click', ()=> Personaje1.defender())
+    inputBtn.addEventListener('click',Personaje1.atacar)
+    volver.addEventListener('click', Personaje1.defender)
     inputBtn.value = "Atacar";
     volver.value = "Defender";
 }
@@ -367,8 +358,8 @@ function muerte() {
     inputBtn.removeEventListener('click',combate);
     volver.removeEventListener('click', combate);
     inputBtn.removeEventListener('click', decidir);
-    inputBtn.removeEventListener('click', ()=> Personaje1.atacar());
-    volver.removeEventListener('click', ()=> Personaje1.defender());
+    inputBtn.removeEventListener('click', Personaje1.atacar);
+    volver.removeEventListener('click', Personaje1.defender);
     inputBtn.value = "Continuara...";
     volver.value = "Fin...";
 }
@@ -425,32 +416,151 @@ function decidir() {
             random2(0,100);
 }
 function alertaEncontrado() {
-    swal("Has encontrado Pociones revitalizadoras en el piso", "Se han agregado a tú Mochila!","success",);
+    swal.fire("Has encontrado Pociones revitalizadoras en el piso", "Se han agregado a tú Mochila!","success",);
 }
-let tirar = false;
-function eliminarSweetObject() {
-    swal({
-        title: "Estas seguro de tirar el objeto?",
-        text: "Una vez que lo tires, no lo podras recuperar!",
-        icon: "warning",
-        buttons: true,
-        dangerMode: true,
-    })
-    .then((willDelete) => {
-        if (willDelete) {
-        seCayo();
-        tirar = true;
-        } else {
-        loConservo();
-        tirar = false;
-        }
-    });
+let capa ="";
+let jarro = "";
+let manta = "";
+let yesca = "";
+let pedernal = "";
+let soga = "";
+let bolsa = "";
+let arma = "";
+let pocion = "";
+function obtenerObjetosMochila() {
+    capa = document.getElementById("capa");
+    jarro = document.getElementById("jarro");
+    manta = document.getElementById("manta");
+    soga = document.getElementById("soga");
+    yesca = document.getElementById("yesca");
+    pedernal = document.getElementById("pedernal");
+    eventoObjeto(capa,3);
+    eventoObjeto(jarro,5);
+    eventoObjeto(manta,6);
+    eventoObjeto(pedernal,7);
+    eventoObjeto(soga,9);
+    eventoObjeto(yesca,10);
+    if (mochila["inventario"].includes(pocionHp)) {
+        pocion = document.getElementById("pocion")
+        eventoPocion();
+    }
+    if (mochila["inventario"].includes(espada)) {
+        let arma = document.getElementById("espada");
+        arma.addEventListener('click', alertaError);
+    }else{
+        let arma = document.getElementById("baculo");
+        arma.addEventListener('click', alertaError);
+    }
+    let bolsa = document.getElementById("bolsa de monedas");
+    bolsa.addEventListener('click', alertaError); 
+    
 }
-function seCayo() {
-    swal("Poof! tu objeto ha caído al suelo y se ha perdido", {
-        icon: "success",
-    });
+
+function eventoObjeto(objeto,id){
+    if (objeto!==null) {
+        objeto.addEventListener('click',()=>{
+            const swalWithBootstrapButtons = Swal.mixin({
+                customClass: {
+                    confirmButton: 'btn btn-success',
+                    cancelButton: 'btn btn-danger'
+                },
+                buttonsStyling: false
+            })
+            swalWithBootstrapButtons.fire({
+                title: '¿Estás seguro de tirar este objeto?',
+                text: "Si lo haces, no lo podras recuperar.",
+                icon: 'warning',
+                showCancelButton: true,
+                confirmButtonText: 'Si, tirar',
+                cancelButtonText: 'No, lo voy a conservar!',
+                reverseButtons: true
+            }).then((result) => {
+                if (result.isConfirmed) {
+                    for (let index = 0; index < mochila['inventario'].length; index++) {
+                        const element = mochila['inventario'][index];
+                        if (element.id === id) {
+                            let indice = mochila.inventario.indexOf(element);
+                            mochila.inventario.splice(indice, 1);
+                            tirar = false;
+                        }
+                    }
+                    localStorage.setItem('inventario', JSON.stringify(mochila.inventario));
+                    cerrarMochila();
+                    abrirMochila();
+                    swalWithBootstrapButtons.fire(
+                    'Se tiro!',
+                    'Tu objeto se ha perdido entre las hojas',
+                    'success'
+                )
+                } else if (
+                  /* Read more about handling dismissals below */
+                    result.dismiss === Swal.DismissReason.cancel
+                ) {swalWithBootstrapButtons.fire(
+                        'De acuerdo',
+                        'Has conservado tu objeto',
+                        'error'
+                )
+                }
+            })
+        })
+    }
 }
-function loConservo() {
-    swal("has conservado el objeto!");
+function eventoPocion(){
+    if (pocion!==null) {
+        pocion.addEventListener('click',()=>{
+            const swalWithBootstrapButtons = Swal.mixin({
+                customClass: {
+                    confirmButton: 'btn btn-success',
+                    cancelButton: 'btn btn-danger'
+                },
+                buttonsStyling: false
+            })
+            swalWithBootstrapButtons.fire({
+                title: '¿Estás seguro de tirar este objeto?',
+                text: "Si lo haces, no lo podras recuperar.",
+                icon: 'warning',
+                showCancelButton: true,
+                confirmButtonText: 'Si, tirar',
+                cancelButtonText: 'No, lo voy a conservar!',
+                reverseButtons: true
+            }).then((result) => {
+                if (result.isConfirmed) {
+                    for (let index = 0; index < mochila['inventario'].length; index++) {
+                        const element = mochila['inventario'][index];
+                        if (element.id === 8) {
+                            let indice = mochila.inventario.indexOf(element);
+                            mochila.inventario.splice(indice, 1);
+                            tirar = false;
+                        }
+                    }
+                    localStorage.setItem('inventario', JSON.stringify(mochila.inventario));
+                    cerrarMochila();
+                    abrirMochila();
+                swalWithBootstrapButtons.fire(
+                    'Se tiro!',
+                    'Tu objeto se ha perdido entre las hojas',
+                    'success'
+                )
+                } else if (
+                  /* Read more about handling dismissals below */
+                result.dismiss === Swal.DismissReason.cancel
+                ) {
+                swalWithBootstrapButtons.fire(
+                    'De acuerdo',
+                    'Has conservado tu objeto',
+                    'error'
+                )
+                }
+            })
+        })
+    }else{
+        console.log("esto no anda")
+    }
+}
+function alertaError(){
+            Swal.fire({
+                icon: 'error',
+                title: 'Lo lamentamos',
+                text: 'Este objeto no se puede tirar',
+            })
 }
